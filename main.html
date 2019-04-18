@@ -8,8 +8,29 @@
     <body>
         <br><br><br>
         <h1>Index:</h1>
-        <br>
 
+        <form action="listSpecies" method="get">
+            <fieldset>
+                <legend><b>GET LIST OF ALL SPECIES</b></legend>
+                Or enter a maximum number of species: <input type="text" name="limit"><br><br>
+                <input type="submit" value="SUBMIT">
+            </fieldset>
+        </form><br><br>
+
+
+        <form action="chromosomes" method="get">
+            <fieldset>
+                <legend><b>GET INFORMATION ABOUT CHROMOSOMES</b></legend>
+                <br>Specie of interest: <input type="text" name="specie">
+                <br>Chromosome (if necessary): <input type="text" name="chromo"><br><br>
+
+                OPERATION <select name="operation">
+                    <option value="karyotype">Karyotype</option>
+                    <option value="length">Length of chromosome</option>
+                </select><br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
 
 
     </body>

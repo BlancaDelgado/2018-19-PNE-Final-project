@@ -70,6 +70,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 PORT = 8000
 
 with socketserver.TCPServer(('', PORT), MainHandler) as httpd:
+    httpd.allow_reuse_address = True
     print('Serving at PORT: {}'.format(PORT))
 
     try:
