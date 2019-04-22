@@ -6,9 +6,6 @@ import socketserver
 import termcolor
 
 import json
-import requests
-import sys
-
 
 # Protocol: HTTP
 # Response: HTML page
@@ -35,10 +32,80 @@ def connect(ENDPOINT):
 
     # POLISH INFO
     termcolor.cprint('Response received: {num} {OK}'.format(num=r.status, OK=r.reason), 'green')
-    txt_json = r.read().decode("utf-8")
-    data = json.loads(txt_json)
-    conn.close()
-    return data
+    if r.status == 400:
+        return False
+
+    else:
+        txt_json = r.read().decode("utf-8")
+        data = json.loads(txt_json)
+        conn.close()
+        return data
+
+
+def error(error):
+    """
+    Select HTML file according to error.
+    :param error: string with name of error (NoFile, Limit, NoSpecies).
+    :return: contents to open.
+    """
+
+    if error == 'NoFile':
+        msg_error = 'Sorry, this resource is not available.'
+
+    elif error == 'Limit':
+        msg_error = 'Make sure you introduce correct values. Limit must be a positive integer.'
+
+    elif error == 'Species':
+        msg_error = """
+        This species is not available. 
+        Check for valid species between parenthesis <a href="/listSpecies">here</a>."""
+
+    else:
+        msg_error = 'Unknown error. Try later please.'
+
+    html = """<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>{msg_error}</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>""".format(msg_error=msg_error)
+    return html
+
+
+def info(title, data):
+    """
+    Creates HTMl page to show selected information.
+    :param title: title for the web page created.
+    :param data: info to be displayed in the web.
+    :return: HTML contents.
+    """
+
+    html = """
+        <html>
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+    
+            <body>
+                <h3><u>{TITLE}</u>:</h3>
+                <p>{data}</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+            
+        </html>
+        """.format(TITLE=title, data=data)
+    return html
 
 
 class MainHandler(http.server.BaseHTTPRequestHandler):
@@ -56,7 +123,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             f200 = open('main.html', 'r')
             contents = f200.read()
 
-        # GET: list of species
+        # --- 1.- LIST OF SPECIES
         elif 'listSpecies' in self.path:
 
             endpoint = '/info/species'
@@ -77,45 +144,39 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                     if n > limit:
                         break  # limit reached
 
-                    name = i['display_name']
-                    list_species.append(str(n) + '. ' + name)
+                    dname = i['display_name']
+                    name = i['name']
+                    list_species.append(str(n) + '. ' + dname + ' (<i>' + name + '</i>)')
 
                 str_species = '<br>'.join(list_species)
 
-                contents = """
-                <html>
-                    <header>
-                        <meta charset="UTF-8">
-                        <title>Species</title>
-                    </header>
-                    
-                    <body>
-                        <h3><u>SPECIES</u>:</h3>
-                        <p>{species}</p>
-                        <br>
-                        <a href="/">[Main page]</a>
-                        <br><br>
-                    </body>
-                </html>
-                
-                """.format(species=str_species)
+                contents = info('SPECIES', str_species)
 
             except ValueError:  # unless limit is not valid
-                f02 = open('error_ValueError.html', 'r')
-                contents = f02.read()
+                contents = error('Limit')
 
-        # GET: karyotype
+        # --- 2.- KARYOTYPE
         elif 'karyotype' in self.path:
-            contents = 'KARYOTYPE'
 
-        # GET: chromosome length
+            path = self.path.split('?')
+            species = path[1].split('=')[1]
+
+            endpoint = '/info/assembly/' + species
+            data = connect(endpoint)
+
+            if 'error' in data.keys():  # wrong or no species selected
+                contents = error('Species')
+            else:
+                karyotype = '<br>'.join(data['karyotype'])
+                contents = info('KARYOTYPE', karyotype)
+
+        # --- 3.- CHROMOSOME LENGTH
         elif 'chromosomeLength' in self.path:
             contents = 'CHROMOSOME'
 
         # Error
         else:
-            f01 = open('error_NoPage.html', 'r')
-            contents = f01.read()
+            contents = error('NoPage')
 
         # GET RESPONSE MESSAGE
         self.send_response(200)
