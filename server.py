@@ -4,7 +4,6 @@ import http.server
 import http.client
 import socketserver
 import termcolor
-
 import json
 
 # Protocol: HTTP
@@ -42,7 +41,7 @@ def connect(ENDPOINT):
         return data
 
 
-def error(error):
+def error(error, species=None):
     """
     Select HTML file according to error.
     :param error: string with name of error (NoFile, Limit, NoSpecies).
@@ -53,12 +52,20 @@ def error(error):
         msg_error = 'Sorry, this resource is not available.'
 
     elif error == 'Limit':
-        msg_error = 'Make sure you introduce correct values. Limit must be a positive integer.'
+        msg_error = 'Make sure to introduce correct values. Limit must be a positive integer.'
 
     elif error == 'Species':
         msg_error = """
         This species is not available. 
         Check for valid species between parenthesis <a href="/listSpecies">here</a>."""
+
+    elif error == 'NoSpecies':
+        msg_error = 'Make sure to introduce correct values. A species must be selected!'
+
+    elif error == 'NoChromo':
+        msg_error = """
+        This chromosome could not be found in the karyotype of '{species}'.<br>
+        Check for valid chromosomes <a href="/karyotype?specie={species}">here</a>.""".format(species=species)
 
     else:
         msg_error = 'Unknown error. Try later please.'
@@ -118,7 +125,9 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint('\n'+self.requestline, 'green')
 
         # READ FILE DEPENDING ON PATH
-        # Main page
+        contents = 'ERROR'  # avoid non-mentioned variables in case of error
+
+        # --- 0.- MAIN PAGE
         if self.path == '/' or 'favicon' in self.path:
             f200 = open('main.html', 'r')
             contents = f200.read()
@@ -164,19 +173,52 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             endpoint = '/info/assembly/' + species
             data = connect(endpoint)
 
-            if 'error' in data.keys():  # wrong or no species selected
-                contents = error('Species')
-            else:
-                karyotype = '<br>'.join(data['karyotype'])
-                contents = info('KARYOTYPE', karyotype)
+            try:
+                if bool(data):
+                    karyotype = '<br>'.join(data['karyotype'])
+                    contents = info('KARYOTYPE', karyotype)
+
+                else:  # wrong species selected, warning dict received
+                    contents = error('Species')
+
+            except KeyError:  # no species selected, no dict received
+                contents = error('NoSpecies')
 
         # --- 3.- CHROMOSOME LENGTH
         elif 'chromosomeLength' in self.path:
-            contents = 'CHROMOSOME'
 
-        # Error
+            paths = self.path.split('?')[1].split('&')
+            species = paths[0].split('=')[1]
+            chromo = paths[1].split('=')[1]
+
+            endpoint = '/info/assembly/' + species
+            data = connect(endpoint)
+
+            try:
+                if bool(data):
+
+                    top_data = data['top_level_region']
+
+                    ok_chromo = False
+                    for i in top_data:
+                        if i['coord_system'] == 'chromosome' and i['name'] == chromo:
+                            ok_chromo = True
+                            length = str(i['length'])
+                            chromosomes = 'Length of chromosome (' + chromo + '): ' + length
+                            contents = info('CHROMOSOME', chromosomes)
+
+                    if not ok_chromo:  # not valid chromosome
+                        contents = error('NoChromo', species=species)
+
+                else:  # wrong species selected, warning dict received
+                    contents = error('Species')
+
+            except KeyError:  # no species selected, no dict received
+                contents = error('NoSpecies')
+
+        # ERROR WHEN DIFFERENT PATHS SUBMITTED
         else:
-            contents = error('NoPage')
+            contents = error('NoFile')
 
         # GET RESPONSE MESSAGE
         self.send_response(200)
@@ -198,10 +240,3 @@ with socketserver.TCPServer(('', PORT), MainHandler) as httpd:
     except KeyboardInterrupt:
         print('EXIT BY USER.')
         httpd.server_close()
-
-# /listSpecies --- all names of species, OPTIONAL 'limit' for max number
-# /karyotype --- karyotype of an 'specie'
-# /chromosomeLength --- length of the chromosome ('chromo') of a given 'specie'
-# / --- main endpoint, HTML with forms to access all previous services
-
-# ELSE --- error page
