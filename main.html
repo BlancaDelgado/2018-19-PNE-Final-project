@@ -9,25 +9,33 @@
         <br><br><br>
         <h1>Index:</h1>
 
-        <form action="listSpecies" method="get">
+        <fieldset>
+            <legend><b>GET THE SPECIES</b></legend>
+            <form action="listSpecies" method="get">
+                <p>Get list of all species</p>
+                <input type="submit" value="SUBMIT"><br><br>
+            </form>
+
+            <form action="listSpecies" method="get">
+                <p>Get list of limited number of species</p>
+                <input type="text" name="limit">LIMIT<br>
+                <input type="submit" value="SUBMIT">
+            </form>
+        </fieldset><br><br>
+
+        <form action="karyotype" method="get">
             <fieldset>
-                <legend><b>GET LIST OF ALL SPECIES</b></legend>
-                Or enter a maximum number of species: <input type="text" name="limit"><br><br>
+                <legend><b>GET THE KARYOTYPE</b></legend>
+                Enter name of specie: <input type="text" name="specie"><br><br>
                 <input type="submit" value="SUBMIT">
             </fieldset>
         </form><br><br>
 
-
-        <form action="chromosomes" method="get">
+        <form action="chromosomeLength" method="get">
             <fieldset>
-                <legend><b>GET INFORMATION ABOUT CHROMOSOMES</b></legend>
-                <br>Specie of interest: <input type="text" name="specie">
-                <br>Chromosome (if necessary): <input type="text" name="chromo"><br><br>
-
-                OPERATION <select name="operation">
-                    <option value="karyotype">Karyotype</option>
-                    <option value="length">Length of chromosome</option>
-                </select><br><br>
+                <legend><b>GET THE CHROMOSOME LENGTH</b></legend>
+                Enter name of specie: <input type="text" name="specie">
+                <br>Enter name of chromosome: <input type="text" name="chromo"><br><br>
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br>
