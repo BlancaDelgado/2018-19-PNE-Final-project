@@ -10,8 +10,6 @@ import json
 # Response: HTML page
 
 
-# BASIC LEVEL
-
 def connect(ENDPOINT):
     """
     Client that connects to ENSEMBL.
@@ -127,12 +125,12 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         # READ FILE DEPENDING ON PATH
         contents = 'ERROR'  # avoid non-mentioned variables in case of error
 
-        # --- 0.- MAIN PAGE
+        # --- 0.0.- MAIN PAGE
         if self.path == '/' or 'favicon' in self.path:
             f200 = open('main.html', 'r')
             contents = f200.read()
 
-        # --- 1.- LIST OF SPECIES
+        # --- 1.1.- LIST OF SPECIES
         elif 'listSpecies' in self.path:
 
             endpoint = '/info/species'
@@ -164,7 +162,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             except ValueError:  # unless limit is not valid
                 contents = error('Limit')
 
-        # --- 2.- KARYOTYPE
+        # --- 1.2.- KARYOTYPE
         elif 'karyotype' in self.path:
 
             path = self.path.split('?')
@@ -184,7 +182,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             except KeyError:  # no species selected, no dict received
                 contents = error('NoSpecies')
 
-        # --- 3.- CHROMOSOME LENGTH
+        # --- 1.3.- CHROMOSOME LENGTH
         elif 'chromosomeLength' in self.path:
 
             paths = self.path.split('?')[1].split('&')
@@ -215,6 +213,16 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
             except KeyError:  # no species selected, no dict received
                 contents = error('NoSpecies')
+
+        # --- 1.4.- SEQUENCE OF A GENE
+        elif 'geneSeq' in self.path:
+
+            path = self.path.split('?')
+            species = path[1].split('=')[1]
+
+            endpoint = '/info/assembly/' + species
+            data = connect(endpoint)
+
 
         # ERROR WHEN DIFFERENT PATHS SUBMITTED
         else:

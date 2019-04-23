@@ -9,6 +9,7 @@
         <br><br><br>
         <h1>Index:</h1>
 
+        <br><h4><u>BASIC LEVEL</u></h4>
         <fieldset>
             <legend><b>GET THE SPECIES</b></legend>
             <form action="listSpecies" method="get">
@@ -21,7 +22,7 @@
                 <input type="text" name="limit">LIMIT<br>
                 <input type="submit" value="SUBMIT">
             </form>
-        </fieldset><br><br>
+        </fieldset><br>
 
         <form action="karyotype" method="get">
             <fieldset>
@@ -29,7 +30,7 @@
                 Enter name of specie: <input name="specie" type="text"><br><br>
                 <input type="submit" value="SUBMIT">
             </fieldset>
-        </form><br><br>
+        </form><br>
 
         <form action="chromosomeLength" method="get">
             <fieldset>
@@ -39,6 +40,42 @@
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br>
-    </body>
 
+
+        <br><h4><u>MEDIUM LEVEL</u></h4>
+        <form action="geneSeq" method="get">
+            <fieldset>
+                <legend><b>GET THE SEQUENCE OF A GENE</b></legend>
+                Enter name of gene: <input type="text" name="gene"><br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+        <form action="geneInfo" method="get">
+            <fieldset>
+                <legend><b>GET THE INFORMATION OF A GENE</b></legend>
+                Enter name of gene: <input type="text" name="gene"><br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+        <form action="geneCal" method="get">
+            <fieldset>
+                <legend><b>GET GENE CALCULATIONS</b></legend>
+                Enter name of gene: <input type="text" name="gene"><br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+        <form action="geneList" method="get">
+            <fieldset>
+                <legend><b>GET THE GENES INSIDE A CHROMOSOME</b></legend>
+                Enter name of chromosome: <input type="text" name="chromo"><br><br>
+                Start position: <input type="text" name="start"><br>
+                End position: <input type="text" name="end"><br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+    </body>
 </html>
