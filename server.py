@@ -267,11 +267,8 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 contents = info(title, msg_seq)
 
         elif 'geneInfo' in self.path:
-
             endpoint = '/lookup/id/'
-
             pass
-
 
         # http://rest.ensembl.org/lookup/id/ENSG00000165879?;content-type=application/json
         # GET RESPONSE MESSAGE
