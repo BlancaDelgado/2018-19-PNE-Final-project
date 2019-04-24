@@ -85,6 +85,34 @@ def error(error, species=None):
     return html
 
 
+def info(title, data):
+    """
+    Creates HTMl page to show selected information.
+    :param title: title for the web page created.
+    :param data: info to be displayed in the web.
+    :return: HTML contents.
+    """
+
+    html = """
+        <html>
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>{TITLE}</u>:</h3>
+                <p>{data}</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+        """.format(TITLE=title, data=data)
+    return html
+
+
 # FUNCTIONS TO WORKOUT ENDPOINTS:
 def get_gene(gene):
     """
@@ -104,34 +132,6 @@ def get_gene(gene):
     return ID
 
 
-def info(title, data):
-    """
-    Creates HTMl page to show selected information.
-    :param title: title for the web page created.
-    :param data: info to be displayed in the web.
-    :return: HTML contents.
-    """
-
-    html = """
-        <html>
-            <header>
-                <meta charset="UTF-8">
-                <title>Data</title>
-            </header>
-    
-            <body>
-                <h3><u>{TITLE}</u>:</h3>
-                <p>{data}</p>
-                <br>
-                <a href="/">[Main page]</a>
-                <br><br>
-            </body>
-            
-        </html>
-        """.format(TITLE=title, data=data)
-    return html
-
-
 class MainHandler(http.server.BaseHTTPRequestHandler):
 
     socketserver.TCPServer.allow_reuse_address = True
@@ -142,10 +142,16 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint('\n'+self.requestline, 'green')
 
         # READ FILE DEPENDING ON PATH
+
+        # First check most common errors
         contents = error('NoFile')  # avoid non-mentioned variables in case of error
 
+        num_slash = self.path.count('/')
+        if num_slash != 1:
+            contents = error('NoFile')
+
         # --- 0.0.- MAIN PAGE
-        if self.path == '/' or 'favicon' in self.path:
+        elif self.path == '/' or 'favicon' in self.path:
             f200 = open('main.html', 'r')
             contents = f200.read()
 
@@ -261,6 +267,9 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 contents = info(title, msg_seq)
 
         elif 'geneInfo' in self.path:
+
+            endpoint = '/lookup/id/'
+
             pass
 
 
