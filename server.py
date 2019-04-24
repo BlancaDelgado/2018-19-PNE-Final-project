@@ -1,15 +1,11 @@
-# Web server basic level
+# Blanca Delgado; web server medium level
 
-import http.server
-import http.client
-import socketserver
+import http.server, http.client, socketserver
 import termcolor
 import json
 
-# Protocol: HTTP
-# Response: HTML page
 
-
+# FUNCTIONS TO WORKOUT PROGRAM:
 def connect(ENDPOINT):
     """
     Client that connects to ENSEMBL.
@@ -39,6 +35,7 @@ def connect(ENDPOINT):
         return data
 
 
+# FUNCTIONS TO GET HTML CONTENTS:
 def error(error, species=None):
     """
     Select HTML file according to error.
@@ -65,6 +62,9 @@ def error(error, species=None):
         This chromosome could not be found in the karyotype of '{species}'.<br>
         Check for valid chromosomes <a href="/karyotype?specie={species}">here</a>.""".format(species=species)
 
+    elif error == 'NoGene':
+        msg_error = 'This gene is not available.'
+
     else:
         msg_error = 'Unknown error. Try later please.'
 
@@ -83,6 +83,25 @@ def error(error, species=None):
                     </body>
                 </html>""".format(msg_error=msg_error)
     return html
+
+
+# FUNCTIONS TO WORKOUT ENDPOINTS:
+def get_gene(gene):
+    """
+    Returns ID of gene from Ensembl.
+    :param gene: name of a human gene.
+    :return:    String with ID of gene if it exists.
+                False if gene could not be found.
+    """
+    endpoint = '/homology/symbol/human/' + gene
+    data = connect(endpoint)
+
+    if not bool(data):
+        ID = False
+
+    else:
+        ID = data['data'][0]['id']
+    return ID
 
 
 def info(title, data):
@@ -123,7 +142,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         termcolor.cprint('\n'+self.requestline, 'green')
 
         # READ FILE DEPENDING ON PATH
-        contents = 'ERROR'  # avoid non-mentioned variables in case of error
+        contents = error('NoFile')  # avoid non-mentioned variables in case of error
 
         # --- 0.0.- MAIN PAGE
         if self.path == '/' or 'favicon' in self.path:
@@ -214,20 +233,38 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             except KeyError:  # no species selected, no dict received
                 contents = error('NoSpecies')
 
-        # --- 1.4.- SEQUENCE OF A GENE
+        # --- 2.1.- SEQUENCE OF A GENE
         elif 'geneSeq' in self.path:
 
             path = self.path.split('?')
-            species = path[1].split('=')[1]
+            gene = path[1].split('=')[1]
+            gene_ID = get_gene(gene)
 
-            endpoint = '/info/assembly/' + species
-            data = connect(endpoint)
+            if not gene_ID:
+                contents = error('NoGene')
+            else:
+                endpoint = '/sequence/id/' + gene_ID
+                data = connect(endpoint)
+                seq = data['seq']
+
+                msg_seq = []
+                i = 0
+                for nucleotide in seq:
+                    msg_seq.append(nucleotide)
+                    i += 1
+                    if i > 90:
+                        msg_seq.append('<br>')
+                        i = 0
+
+                msg_seq = "".join(msg_seq)
+                title = (gene + ' SEQUENCE').upper()
+                contents = info(title, msg_seq)
+
+        elif 'geneInfo' in self.path:
+            pass
 
 
-        # ERROR WHEN DIFFERENT PATHS SUBMITTED
-        else:
-            contents = error('NoFile')
-
+        # http://rest.ensembl.org/lookup/id/ENSG00000165879?;content-type=application/json
         # GET RESPONSE MESSAGE
         self.send_response(200)
         self.send_header('Content-Type', 'text/html')
