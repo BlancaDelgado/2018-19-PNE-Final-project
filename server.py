@@ -277,24 +277,61 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 title = (gene + ' SEQUENCE').upper()
                 contents = info(title, msg_seq)
 
+        # --- 2.2.- INFORMATION OF THE GENE
         elif 'geneInfo' in self.path:
             gene = path_1
             gene_ID = get_gene(gene)
-            endpoint = '/sequence/id/' + gene_ID
 
-            data = connect(endpoint)['desc']
-            data = data.split(':')
-            i_chrome = 'CHROMOSOME: ' + str(data[1]) + '.p' + str(data[2])
-            i_start = '<br>START:' + str(data[3])
-            i_end = 'END:' + str(data[4])
-            i_length = 'LENGTH:' + str(int(data[4]) - int(data[3]))
-            i_id = 'ID:' + gene_ID
+            if not bool(gene_ID):
+                contents = error('NoGene')
+            else:
+                endpoint = '/sequence/id/' + gene_ID
 
-            info = [i_chrome, i_id, i_start, i_end, i_length]
-            info = '<br>'.join(info)
-            contents = info('INFORMATION:', info)
+                data = connect(endpoint)['desc']
+                data = data.split(':')
+                i_chrome = 'CHROMOSOME: ' + str(data[1]) + '.p' + str(data[2])
+                i_start = '<br>START: ' + str(data[3])
+                i_end = 'END: ' + str(data[4])
+                i_length = 'LENGTH: ' + str(int(data[4]) - int(data[3]))
+                i_id = 'ID: ' + gene_ID
 
-            print(info)
+                i_all = [i_chrome, i_id, i_start, i_end, i_length]
+                i_all = '<br>'.join(i_all)
+                contents = info('INFORMATION', i_all)
+
+        # --- 2.3.- CALCULATIONS OF THE GENE
+        elif 'geneCalc' in self.path:
+            gene = path_1
+            gene_ID = get_gene(gene)
+
+            if not bool(gene_ID):
+                contents = error('NoGene')
+            else:
+                endpoint = '/sequence/id/' + gene_ID
+                data = connect(endpoint)
+                seq = data['seq']
+
+                c_all = []
+                c_length = 'LENGTH: ' + str(len(seq))
+                c_all.append(c_length)
+
+                for i in 'ACGT':
+                    num = str(seq.count(i))
+                    try:
+                        perc = round((int(num) / len(seq)) * 100, 2)
+                        perc = '{}%'.format(perc)
+                    except ZeroDivisionError:
+                        perc = '0%'
+
+                    i_calc = i + ': ' + num + ' (' + perc + ')'
+                    c_all.append(i_calc)
+
+                c_all = '<br>'.join(c_all)
+                contents = info('CALCULATIONS', c_all)
+
+        # --- 2.4.- NAMES OF GENES IN A CHROMOSOME
+        elif 'geneList' in self.path:
+            pass
 
         # GET RESPONSE MESSAGE
         self.send_response(200)
