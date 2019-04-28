@@ -125,7 +125,7 @@ def get_gene(gene):
     data = connect(endpoint)
 
     if not bool(data):
-        ID = False
+        ID = ''
 
     else:
         ID = data['data'][0]['id']
@@ -143,29 +143,48 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         # READ FILE DEPENDING ON PATH
 
-        # First check most common errors
+        # First check most common error and organize info
         contents = error('NoFile')  # avoid non-mentioned variables in case of error
 
         num_slash = self.path.count('/')
         if num_slash != 1:
             contents = error('NoFile')
 
+        else:
+            # Save all parts of the path in different variables
+            num_q_paths = self.path.count('?')
+            num_a_paths = self.path.count('&')
+            num_paths = num_q_paths + num_a_paths
+
+            if num_paths == 0:
+                path_0 = ''
+
+            else:
+                path = self.path.split('?')[1]
+                path = path.split('&')
+
+                if num_paths >= 1:
+                    path_1 = path[0].split('=')[1]
+
+                    if num_paths >= 2:
+                        path_2 = path[1].split('=')[1]
+
+                        if num_paths >= 3:
+                            path_3 = path[2].split('=')[1]
+
         # --- 0.0.- MAIN PAGE
-        elif self.path == '/' or 'favicon' in self.path:
+        if self.path == '/' or 'favicon' in self.path:
             f200 = open('main.html', 'r')
             contents = f200.read()
 
         # --- 1.1.- LIST OF SPECIES
         elif 'listSpecies' in self.path:
-
             endpoint = '/info/species'
             data = connect(endpoint)['species']
 
             try:  # set limit, find species
-                if '=' in self.path:
-                    path = self.path.split('?')
-                    limit = path[1].split('=')[1]
-                    limit = int(limit)
+                if num_paths == 1:
+                    limit = int(path_1)
                 else:
                     limit = len(data)
 
@@ -189,10 +208,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         # --- 1.2.- KARYOTYPE
         elif 'karyotype' in self.path:
-
-            path = self.path.split('?')
-            species = path[1].split('=')[1]
-
+            species = path_1
             endpoint = '/info/assembly/' + species
             data = connect(endpoint)
 
@@ -209,11 +225,8 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         # --- 1.3.- CHROMOSOME LENGTH
         elif 'chromosomeLength' in self.path:
-
-            paths = self.path.split('?')[1].split('&')
-            species = paths[0].split('=')[1]
-            chromo = paths[1].split('=')[1]
-
+            species = path_1
+            chromo = path_2
             endpoint = '/info/assembly/' + species
             data = connect(endpoint)
 
@@ -241,12 +254,10 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         # --- 2.1.- SEQUENCE OF A GENE
         elif 'geneSeq' in self.path:
-
-            path = self.path.split('?')
-            gene = path[1].split('=')[1]
+            gene = path_1
             gene_ID = get_gene(gene)
 
-            if not gene_ID:
+            if not bool(gene_ID):
                 contents = error('NoGene')
             else:
                 endpoint = '/sequence/id/' + gene_ID
@@ -267,10 +278,24 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 contents = info(title, msg_seq)
 
         elif 'geneInfo' in self.path:
-            endpoint = '/lookup/id/'
-            pass
+            gene = path_1
+            gene_ID = get_gene(gene)
+            endpoint = '/sequence/id/' + gene_ID
 
-        # http://rest.ensembl.org/lookup/id/ENSG00000165879?;content-type=application/json
+            data = connect(endpoint)['desc']
+            data = data.split(':')
+            i_chrome = 'CHROMOSOME: ' + str(data[1]) + '.p' + str(data[2])
+            i_start = '<br>START:' + str(data[3])
+            i_end = 'END:' + str(data[4])
+            i_length = 'LENGTH:' + str(int(data[4]) - int(data[3]))
+            i_id = 'ID:' + gene_ID
+
+            info = [i_chrome, i_id, i_start, i_end, i_length]
+            info = '<br>'.join(info)
+            contents = info('INFORMATION:', info)
+
+            print(info)
+
         # GET RESPONSE MESSAGE
         self.send_response(200)
         self.send_header('Content-Type', 'text/html')
