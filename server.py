@@ -21,6 +21,7 @@ def connect(ENDPOINT):
     termcolor.cprint('Connecting: http://' + HOSTNAME + ENDPOINT, 'green')
     conn = http.client.HTTPConnection(HOSTNAME)
     conn.request(METHOD, ENDPOINT, '?', headers)
+
     r = conn.getresponse()
 
     # POLISH INFO
@@ -60,6 +61,12 @@ def error(error, species=None):
     elif error == 'NoChromo':
         msg_error = """
         This chromosome could not be found in the karyotype of '{species}'.<br>
+        Check for valid chromosomes <a href="/karyotype?specie={species}">here</a>.""".format(species=species)
+
+    elif error == 'WrongChromo':
+        msg_error = """
+        We could not analyze your operation.
+        Please try another chromosome in the karyotype of '{species}' or try different lengths!<br>
         Check for valid chromosomes <a href="/karyotype?specie={species}">here</a>.""".format(species=species)
 
     elif error == 'NoGene':
@@ -331,7 +338,21 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         # --- 2.4.- NAMES OF GENES IN A CHROMOSOME
         elif 'geneList' in self.path:
-            pass
+            l_chromo = path_1
+            l_start = path_2
+            l_end = path_3
+            endpoint = '/overlap/region/human/' + l_chromo + ':' + l_start + '-' + l_end + '?feature=gene'
+            data = connect(endpoint)
+            print(data)
+            if not bool(data):
+                contents = error('WrongChromo', 'homo_sapiens')
+            else:
+                genes = []
+                for i in data:
+                    l_gene = i['external_name']
+                    genes.append(l_gene)
+                genes = '<br>'.join(genes)
+                contents = info('GENES LOCATED IN THE CHROMOSOME', genes)
 
         # GET RESPONSE MESSAGE
         self.send_response(200)
