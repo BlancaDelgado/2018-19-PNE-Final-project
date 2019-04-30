@@ -1,4 +1,4 @@
-# Blanca Delgado; web server medium level
+# Blanca Delgado; web server advanced level
 
 import http.server, http.client, socketserver
 import termcolor
@@ -167,10 +167,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             num_a_paths = self.path.count('&')
             num_paths = num_q_paths + num_a_paths
 
-            if num_paths == 0:
-                path_0 = ''
-
-            else:
+            if num_paths != 0:
                 path = self.path.split('?')[1]
                 path = path.split('&')
 
@@ -330,16 +327,21 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 data = connect(endpoint)['desc']
                 data = data.split(':')
 
+                i_chrome = str(data[1]) + '.p' + str(data[2])
+                i_start = str(data[3])
+                i_end = str(data[4])
+                i_length = str(int(data[4]) - int(data[3]))
+                i_id = gene_ID
 
                 if restapi:
                     i_all = {'chromosome': i_chrome, 'id': i_id, 'start': i_start, 'end': i_end, 'length': i_length}
                     contents = json.dumps(i_all)
                 else:
-                    html_chrome = 'CHROMOSOME: ' + str(data[1]) + '.p' + str(data[2])
-                    html_start = '<br>START: ' + str(data[3])
-                    html_end = 'END: ' + str(data[4])
-                    html_length = 'LENGTH: ' + str(int(data[4]) - int(data[3]))
-                    html_id = 'ID: ' + gene_ID
+                    html_chrome = 'CHROMOSOME: ' + i_chrome
+                    html_start = '<br>START: ' + i_start
+                    html_end = 'END: ' + i_end
+                    html_length = 'LENGTH: ' + i_length
+                    html_id = 'ID: ' + i_id
 
                     i_all = [html_chrome, html_id, html_start, html_end, html_length]
                     i_all = '<br>'.join(i_all)
@@ -358,22 +360,34 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 seq = data['seq']
 
                 c_all = []
-                c_length = 'LENGTH: ' + str(len(seq))
-                c_all.append(c_length)
+                c_json = {}
+
+                c_length = str(len(seq))
+                html_c_length = 'LENGTH: ' + c_length
+
+                c_json['total_length'] = c_length
+                c_all.append(html_c_length)
 
                 for i in 'ACGT':
                     num = str(seq.count(i))
                     try:
-                        perc = round((int(num) / len(seq)) * 100, 2)
-                        perc = '{}%'.format(perc)
+                        c_perc = round((int(num) / len(seq)) * 100, 2)
+                        html_perc = '{}%'.format(c_perc)
                     except ZeroDivisionError:
-                        perc = '0%'
+                        c_perc = 0
+                        html_perc = '0%'
 
-                    i_calc = i + ': ' + num + ' (' + perc + ')'
+                    i_calc = i + ': ' + num + ' (' + html_perc + ')'
                     c_all.append(i_calc)
 
+                    c_json[i] = {'count': num, 'percentage': c_perc}
+
                 c_all = '<br>'.join(c_all)
-                contents = info('CALCULATIONS', c_all)
+
+                if restapi:
+                    contents = json.dumps(c_json)
+                else:
+                    contents = info('CALCULATIONS', c_all)
 
         # --- 2.4.- NAMES OF GENES IN A CHROMOSOME
         elif 'geneList' in self.path:
@@ -382,7 +396,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             l_end = path_3
             endpoint = '/overlap/region/human/' + l_chromo + ':' + l_start + '-' + l_end + '?feature=gene'
             data = connect(endpoint)
-            print(data)
+
             if not bool(data):
                 contents = error('WrongChromo', 'homo_sapiens')
             else:
@@ -390,11 +404,14 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 for i in data:
                     l_gene = i['external_name']
                     genes.append(l_gene)
-                genes = '<br>'.join(genes)
-                contents = info('GENES LOCATED IN THE CHROMOSOME', genes)
+                html_genes = '<br>'.join(genes)
+
+                if restapi:
+                    contents = json.dumps({'genes': genes})
+                else:
+                    contents = info('GENES LOCATED IN THE CHROMOSOME', html_genes)
 
         # GET RESPONSE MESSAGE
-
         self.send_response(200)
 
         if restapi:
