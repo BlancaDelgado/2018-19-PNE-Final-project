@@ -211,6 +211,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                     limit = len(data)
 
                 list_species = []
+                json_species = []
                 n = 0
                 for i in data:
                     n += 1
@@ -220,10 +221,15 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                     dname = i['display_name']
                     name = i['name']
                     list_species.append(str(n) + '. ' + dname + ' (<i>' + name + '</i>)')
+                    json_species.append([{'display_name':dname, 'name':name}])
 
                 str_species = '<br>'.join(list_species)
 
-                contents = info('SPECIES', str_species)
+                if restapi:
+                    contents = json.dumps(json_species)
+
+                else:
+                    contents = info('SPECIES', str_species)
 
             except ValueError:  # unless limit is not valid
                 contents = error('Limit')
@@ -237,7 +243,12 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             try:
                 if bool(data):
                     karyotype = '<br>'.join(data['karyotype'])
-                    contents = info('KARYOTYPE', karyotype)
+                    json_karyotype = data['karyotype']
+
+                    if restapi:
+                        contents = json.dumps({'karyotype': json_karyotype})
+                    else:
+                        contents = info('KARYOTYPE', karyotype)
 
                 else:  # wrong species selected, warning dict received
                     contents = error('Species')
@@ -263,7 +274,11 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                             ok_chromo = True
                             length = str(i['length'])
                             chromosomes = 'Length of chromosome (' + chromo + '): ' + length
-                            contents = info('CHROMOSOME', chromosomes)
+
+                            if restapi:
+                                contents = json.dumps({'length': length})
+                            else:
+                                contents = info('CHROMOSOME', chromosomes)
 
                     if not ok_chromo:  # not valid chromosome
                         contents = error('NoChromo', species=species)
@@ -286,18 +301,21 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 data = connect(endpoint)
                 seq = data['seq']
 
-                msg_seq = []
-                i = 0
-                for nucleotide in seq:
-                    msg_seq.append(nucleotide)
-                    i += 1
-                    if i > 90:
-                        msg_seq.append('<br>')
-                        i = 0
+                if restapi:
+                    contents = json.dumps({'sequence': seq})
+                else:
+                    msg_seq = []
+                    i = 0
+                    for nucleotide in seq:
+                        msg_seq.append(nucleotide)
+                        i += 1
+                        if i > 90:
+                            msg_seq.append('<br>')
+                            i = 0
 
-                msg_seq = "".join(msg_seq)
-                title = (gene + ' SEQUENCE').upper()
-                contents = info(title, msg_seq)
+                    msg_seq = "".join(msg_seq)
+                    title = (gene + ' SEQUENCE').upper()
+                    contents = info(title, msg_seq)
 
         # --- 2.2.- INFORMATION OF THE GENE
         elif 'geneInfo' in self.path:
@@ -311,15 +329,21 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
                 data = connect(endpoint)['desc']
                 data = data.split(':')
-                i_chrome = 'CHROMOSOME: ' + str(data[1]) + '.p' + str(data[2])
-                i_start = '<br>START: ' + str(data[3])
-                i_end = 'END: ' + str(data[4])
-                i_length = 'LENGTH: ' + str(int(data[4]) - int(data[3]))
-                i_id = 'ID: ' + gene_ID
 
-                i_all = [i_chrome, i_id, i_start, i_end, i_length]
-                i_all = '<br>'.join(i_all)
-                contents = info('INFORMATION', i_all)
+
+                if restapi:
+                    i_all = {'chromosome': i_chrome, 'id': i_id, 'start': i_start, 'end': i_end, 'length': i_length}
+                    contents = json.dumps(i_all)
+                else:
+                    html_chrome = 'CHROMOSOME: ' + str(data[1]) + '.p' + str(data[2])
+                    html_start = '<br>START: ' + str(data[3])
+                    html_end = 'END: ' + str(data[4])
+                    html_length = 'LENGTH: ' + str(int(data[4]) - int(data[3]))
+                    html_id = 'ID: ' + gene_ID
+
+                    i_all = [html_chrome, html_id, html_start, html_end, html_length]
+                    i_all = '<br>'.join(i_all)
+                    contents = info('INFORMATION', i_all)
 
         # --- 2.3.- CALCULATIONS OF THE GENE
         elif 'geneCalc' in self.path:
@@ -373,16 +397,15 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(200)
 
-        if not restapi:
-            self.send_header('Content-Type', 'text/html')
-        else:
+        if restapi:
             self.send_header('Content-Type', 'application/json')
+
+        else:
+            self.send_header('Content-Type', 'text/html')
 
         self.send_header('Content-Length', len(str.encode(contents)))
         self.end_headers()
         self.wfile.write(str.encode(contents))
-
-
 
 
 # -- Main program
