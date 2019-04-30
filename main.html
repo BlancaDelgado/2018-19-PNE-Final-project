@@ -13,13 +13,15 @@
         <fieldset>
             <legend><b>GET THE SPECIES</b></legend>
             <form action="listSpecies" method="get">
-                <p>Get list of all species</p>
+                <p>Get list of all species<br>
+                <input type="checkbox" name="json" value="1"> REST API</p>
                 <input type="submit" value="SUBMIT"><br><br>
             </form>
 
             <form action="listSpecies" method="get">
-                <p>Get list of limited number of species</p>
+                <p>Get list of limited number of species<br>
                 <input type="text" name="limit">LIMIT<br>
+                <input type="checkbox" name="json" value="1"> REST API</p>
                 <input type="submit" value="SUBMIT">
             </form>
         </fieldset><br>
@@ -27,7 +29,8 @@
         <form action="karyotype" method="get">
             <fieldset>
                 <legend><b>GET THE KARYOTYPE</b></legend>
-                Enter name of specie: <input name="specie" type="text"><br><br>
+                Enter name of specie: <input name="specie" type="text"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
                 <input type="submit" value="SUBMIT">
             </fieldset>
         </form><br>
@@ -36,7 +39,8 @@
             <fieldset>
                 <legend><b>GET THE CHROMOSOME LENGTH</b></legend>
                 Enter name of specie: <input type="text" name="specie">
-                <br>Enter name of chromosome: <input type="text" name="chromo"><br><br>
+                <br>Enter name of chromosome: <input type="text" name="chromo"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br><br>
@@ -46,7 +50,8 @@
         <form action="geneSeq" method="get">
             <fieldset>
                 <legend><b>GET THE SEQUENCE OF A GENE</b></legend>
-                Enter name of gene: <input type="text" name="gene"><br><br>
+                Enter name of gene: <input type="text" name="gene"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br>
@@ -54,7 +59,8 @@
         <form action="geneInfo" method="get">
             <fieldset>
                 <legend><b>GET THE INFORMATION OF A GENE</b></legend>
-                Enter name of gene: <input type="text" name="gene"><br><br>
+                Enter name of gene: <input type="text" name="gene"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br>
@@ -62,7 +68,8 @@
         <form action="geneCalc" method="get">
             <fieldset>
                 <legend><b>GET GENE CALCULATIONS</b></legend>
-                Enter name of gene: <input type="text" name="gene"><br><br>
+                Enter name of gene: <input type="text" name="gene"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br>
@@ -73,6 +80,7 @@
                 Enter name of chromosome: <input type="text" name="chromo"><br><br>
                 Start position: <input type="text" name="start"><br>
                 End position: <input type="text" name="end"><br><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
                 <input type="submit" value="SUBMIT"/><br>
             </fieldset>
         </form><br>

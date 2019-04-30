@@ -150,6 +150,10 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         # READ FILE DEPENDING ON PATH
 
+        # Declare variables to avoid problems
+        num_q_paths, num_a_paths, num_paths, restapi = None, None, None, None
+        path_0, path_1, path_2, path_3 = None, None, None, None
+
         # First check most common error and organize info
         contents = error('NoFile')  # avoid non-mentioned variables in case of error
 
@@ -171,13 +175,24 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 path = path.split('&')
 
                 if num_paths >= 1:
-                    path_1 = path[0].split('=')[1]
+
+                    if path[0].split('=')[0] != 'json':
+                        path_1 = path[0].split('=')[1]
 
                     if num_paths >= 2:
-                        path_2 = path[1].split('=')[1]
+
+                        if path[1].split('=')[0] != 'json':
+                            path_2 = path[1].split('=')[1]
 
                         if num_paths >= 3:
-                            path_3 = path[2].split('=')[1]
+                            if path[2].split('=')[0] != 'json':
+                                path_3 = path[2].split('=')[1]
+
+            # Check if JSON is requested
+            if 'json' in self.path:
+                restapi = True
+            else:
+                restapi = False
 
         # --- 0.0.- MAIN PAGE
         if self.path == '/' or 'favicon' in self.path:
@@ -190,7 +205,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             data = connect(endpoint)['species']
 
             try:  # set limit, find species
-                if num_paths == 1:
+                if (num_paths == 1 and restapi == False) or (num_paths == 2 and restapi == True):
                     limit = int(path_1)
                 else:
                     limit = len(data)
@@ -355,12 +370,19 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                 contents = info('GENES LOCATED IN THE CHROMOSOME', genes)
 
         # GET RESPONSE MESSAGE
+
         self.send_response(200)
-        self.send_header('Content-Type', 'text/html')
+
+        if not restapi:
+            self.send_header('Content-Type', 'text/html')
+        else:
+            self.send_header('Content-Type', 'application/json')
+
         self.send_header('Content-Length', len(str.encode(contents)))
         self.end_headers()
-
         self.wfile.write(str.encode(contents))
+
+
 
 
 # -- Main program
