@@ -161,8 +161,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         if num_slash != 1:
             contents = error('NoFile')
 
-        else:
-            # Save all parts of the path in different variables
+        else:  # save all parts of the path in different variables
             num_q_paths = self.path.count('?')
             num_a_paths = self.path.count('&')
             num_paths = num_q_paths + num_a_paths
@@ -416,7 +415,6 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
         if restapi:
             self.send_header('Content-Type', 'application/json')
-
         else:
             self.send_header('Content-Type', 'text/html')
 
