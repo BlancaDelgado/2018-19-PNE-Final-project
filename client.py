@@ -3,7 +3,6 @@
 
 import http.client
 import termcolor
-import itertools
 import json
 
 port = 8000
