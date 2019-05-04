@@ -101,7 +101,7 @@ def info(title, data):
     """
 
     html = """
-        <html>
+        <html lang="en">
             <header>
                 <meta charset="UTF-8">
                 <title>Data</title>

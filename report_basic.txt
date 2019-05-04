@@ -1,0 +1,326 @@
+
+TESTING BASIC LEVEL
+Blanca Delgado
+
+--------------------------------
+
+--- 0.0.- MAIN PAGE
+
+---
+http://localhost:8000/
+---
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Main</title>
+    </head>
+
+    <body>
+        <br><br><br>
+        <h1>Index:</h1>
+
+        <br><h4><u>BASIC LEVEL</u></h4>
+        <fieldset>
+            <legend><b>GET THE SPECIES</b></legend>
+            <form action="listSpecies" method="get">
+                <p>Get list of all species<br>
+                <input type="checkbox" name="json" value="1"> REST API</p>
+                <input type="submit" value="SUBMIT"><br><br>
+            </form>
+
+            <form action="listSpecies" method="get">
+                <p>Get list of limited number of species<br>
+                <input type="text" name="limit">LIMIT<br>
+                <input type="checkbox" name="json" value="1"> REST API</p>
+                <input type="submit" value="SUBMIT">
+            </form>
+        </fieldset><br>
+
+        <form action="karyotype" method="get">
+            <fieldset>
+                <legend><b>GET THE KARYOTYPE</b></legend>
+                Enter name of specie: <input name="specie" type="text"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
+                <input type="submit" value="SUBMIT">
+            </fieldset>
+        </form><br>
+
+        <form action="chromosomeLength" method="get">
+            <fieldset>
+                <legend><b>GET THE CHROMOSOME LENGTH</b></legend>
+                Enter name of specie: <input type="text" name="specie">
+                <br>Enter name of chromosome: <input type="text" name="chromo"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br><br>
+
+
+        <br><h4><u>MEDIUM LEVEL</u></h4>
+        <form action="geneSeq" method="get">
+            <fieldset>
+                <legend><b>GET THE SEQUENCE OF A GENE</b></legend>
+                Enter name of gene: <input type="text" name="gene"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+        <form action="geneInfo" method="get">
+            <fieldset>
+                <legend><b>GET THE INFORMATION OF A GENE</b></legend>
+                Enter name of gene: <input type="text" name="gene"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+        <form action="geneCalc" method="get">
+            <fieldset>
+                <legend><b>GET GENE CALCULATIONS</b></legend>
+                Enter name of gene: <input type="text" name="gene"><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+        <form action="geneList" method="get">
+            <fieldset>
+                <legend><b>GET THE GENES INSIDE A CHROMOSOME</b></legend>
+                Enter name of chromosome: <input type="text" name="chromo"><br><br>
+                Start position: <input type="text" name="start"><br>
+                End position: <input type="text" name="end"><br><br>
+                <input type="checkbox" name="json" value="1"> REST API<br><br>
+                <input type="submit" value="SUBMIT"/><br>
+            </fieldset>
+        </form><br>
+
+    </body>
+</html>
+
+---
+SOLVING ERRORS: http://localhost:8000/what
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>Sorry, this resource is not available.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+--------------------------------
+
+--- 1.1.- LIST SPECIES
+
+---
+http://localhost:8000/listSpecies
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>SPECIES</u>:</h3>
+                <p>1. Mouse (<i>mus_musculus</i>)<br>2. Human (<i>homo_sapiens</i>)<br>3. Guinea Pig (<i>cavia_porcellus</i>)<br>4. Mouse CBA/J (<i>mus_musculus_cbaj</i>)<br>5. Midas cichlid (<i>amphilophus_citrinellus</i>)<br>6. Anole lizard (<i>anolis_carolinensis</i>)<br>7. Capuchin (<i>cebus_capucinus</i>)<br>8. Ballan wrasse (<i>labrus_bergylta</i>)<br>9. Leopard (<i>panthera_pardus</i>)<br>10. Fugu (<i>takifugu_rubripes</i>)<br>11. Black snub-nosed monkey (<i>rhinopithecus_bieti</i>)<br>12. Zig-zag eel (<i>mastacembelus_armatus</i>)<br>13. Blue-crowned manakin (<i>lepidothrix_coronata</i>)<br>14. Damara mole rat (<i>fukomys_damarensis</i>)<br>15. Opossum (<i>monodelphis_domestica</i>)<br>16. Donkey (<i>equus_asinus_asinus</i>)<br>17. Platyfish (<i>xiphophorus_maculatus</i>)<br>18. Little spotted kiwi (<i>apteryx_owenii</i>)<br>19. Ruff (<i>calidris_pugnax</i>)<br>20. Stickleback (<i>gasterosteus_aculeatus</i>)<br>21. Chinese hamster PICR (<i>cricetulus_griseus_picr</i>)<br>22. Steppe mouse (<i>mus_spicilegus</i>)<br>23. Indian medaka (<i>oryzias_melastigma</i>)<br>24. Upper Galilee mountains blind mole rat (<i>nannospalax_galili</i>)<br>25. Abingdon island giant tortoise (<i>chelonoidis_abingdonii</i>)<br>26. Spiny chromis (<i>acanthochromis_polyacanthus</i>)<br>27. Asian bonytongue (<i>scleropages_formosus</i>)<br>28. Tasmanian devil (<i>sarcophilus_harrisii</i>)<br>29. Chicken (<i>gallus_gallus</i>)<br>30. Coelacanth (<i>latimeria_chalumnae</i>)<br>31. Helmeted guineafowl (<i>numida_meleagris</i>)<br>32. Mouse A/J (<i>mus_musculus_aj</i>)<br>33. Sailfin molly (<i>poecilia_latipinna</i>)<br>34. Koala (<i>phascolarctos_cinereus</i>)<br>35. Mouse FVB/NJ (<i>mus_musculus_fvbnj</i>)<br>36. Chinese hamster CHOK1GS (<i>cricetulus_griseus_chok1gshd</i>)<br>37. Mouse LP/J (<i>mus_musculus_lpj</i>)<br>38. Naked mole-rat female (<i>heterocephalus_glaber_female</i>)<br>39. Spoon-billed sandpiper (<i>calidris_pygmaea</i>)<br>40. Duck (<i>anas_platyrhynchos_platyrhynchos</i>)<br>41. Bolivian squirrel monkey (<i>saimiri_boliviensis_boliviensis</i>)<br>42. Bengalese finch (<i>lonchura_striata_domestica</i>)<br>43. Marmoset (<i>callithrix_jacchus</i>)<br>44. Sheep (<i>ovis_aries</i>)<br>45. Olive baboon (<i>papio_anubis</i>)<br>46. Crab-eating macaque (<i>macaca_fascicularis</i>)<br>47. Mainland tiger snake (<i>notechis_scutatus</i>)<br>48. Goat (<i>capra_hircus</i>)<br>49. Mummichog (<i>fundulus_heteroclitus</i>)<br>50. American black bear (<i>ursus_americanus</i>)<br>51. Mouse NZO/HlLtJ (<i>mus_musculus_nzohlltj</i>)<br>52. Wallaby (<i>notamacropus_eugenii</i>)<br>53. Dolphin (<i>tursiops_truncatus</i>)<br>54. Western mosquitofish (<i>gambusia_affinis</i>)<br>55. Cat (<i>felis_catus</i>)<br>56. Bonobo (<i>pan_paniscus</i>)<br>57. Gibbon (<i>nomascus_leucogenys</i>)<br>58. Vervet-AGM (<i>chlorocebus_sabaeus</i>)<br>59. Cow (<i>bos_taurus</i>)<br>60. Clown anemonefish (<i>amphiprion_ocellaris</i>)<br>61. Shrew mouse (<i>mus_pahari</i>)<br>62. Japanese quail (<i>coturnix_japonica</i>)<br>63. Tarsier (<i>carlito_syrichta</i>)<br>64. Great spotted kiwi (<i>apteryx_haastii</i>)<br>65. Pig-tailed macaque (<i>macaca_nemestrina</i>)<br>66. Tuatara (<i>sphenodon_punctatus</i>)<br>67. Pink-footed goose (<i>anser_brachyrhynchus</i>)<br>68. Climbing perch (<i>anabas_testudineus</i>)<br>69. Spotted gar (<i>lepisosteus_oculatus</i>)<br>70. Golden snub-nosed monkey (<i>rhinopithecus_roxellana</i>)<br>71. Daurian ground squirrel (<i>spermophilus_dauricus</i>)<br>72. Amazon molly (<i>poecilia_formosa</i>)<br>73. Turbot (<i>scophthalmus_maximus</i>)<br>74. Algerian mouse (<i>mus_spretus</i>)<br>75. Lamprey (<i>petromyzon_marinus</i>)<br>76. Xenopus (<i>xenopus_tropicalis</i>)<br>77. Agassiz's desert tortoise (<i>gopherus_agassizii</i>)<br>78. American bison (<i>bison_bison_bison</i>)<br>79. Mouse 129S1/SvImJ (<i>mus_musculus_129s1svimj</i>)<br>80. Channel catfish (<i>ictalurus_punctatus</i>)<br>81. Degu (<i>octodon_degus</i>)<br>82. Angola colobus (<i>colobus_angolensis_palliatus</i>)<br>83. Golden-collared manakin (<i>manacus_vitellinus</i>)<br>84. Eastern happy (<i>astatotilapia_calliptera</i>)<br>85. Greater bamboo lemur (<i>prolemur_simus</i>)<br>86. Mouse WSB/EiJ (<i>mus_musculus_wsbeij</i>)<br>87. Armadillo (<i>dasypus_novemcinctus</i>)<br>88. Mangrove rivulus (<i>kryptolebias_marmoratus</i>)<br>89. Mouse DBA/2J (<i>mus_musculus_dba2j</i>)<br>90. Arctic ground squirrel (<i>urocitellus_parryii</i>)<br>91. Gorilla (<i>gorilla_gorilla</i>)<br>92. Mouse Lemur (<i>microcebus_murinus</i>)<br>93. Drill (<i>mandrillus_leucophaeus</i>)<br>94. Central bearded dragon (<i>pogona_vitticeps</i>)<br>95. American mink (<i>neovison_vison</i>)<br>96. Great Tit (<i>parus_major</i>)<br>97. Macaque (<i>macaca_mulatta</i>)<br>98. Platypus (<i>ornithorhynchus_anatinus</i>)<br>99. Japanese medaka HNI (<i>oryzias_latipes_hni</i>)<br>100. Hagfish (<i>eptatretus_burgeri</i>)<br>101. Dingo (<i>canis_lupus_dingo</i>)<br>102. Zebrafish (<i>danio_rerio</i>)<br>103. Mouse NOD/ShiLtJ (<i>mus_musculus_nodshiltj</i>)<br>104. Bicolor damselfish (<i>stegastes_partitus</i>)<br>105. Long-tailed chinchilla (<i>chinchilla_lanigera</i>)<br>106. Mouse C57BL/6NJ (<i>mus_musculus_c57bl6nj</i>)<br>107. Mexican tetra (<i>astyanax_mexicanus</i>)<br>108. Squirrel (<i>ictidomys_tridecemlineatus</i>)<br>109. Alpaca (<i>vicugna_pacos</i>)<br>110. Australian saltwater crocodile (<i>crocodylus_porosus</i>)<br>111. White-throated sparrow (<i>zonotrichia_albicollis</i>)<br>112. Orange clownfish (<i>amphiprion_percula</i>)<br>113. Tiger (<i>panthera_tigris_altaica</i>)<br>114. Turkey (<i>meleagris_gallopavo</i>)<br>115. Ugandan red Colobus (<i>piliocolobus_tephrosceles</i>)<br>116. Alpine marmot (<i>marmota_marmota_marmota</i>)<br>117. Common canary (<i>serinus_canaria</i>)<br>118. Okarito brown kiwi (<i>apteryx_rowi</i>)<br>119. Argentine black and white tegu (<i>salvator_merianae</i>)<br>120. Sloth (<i>choloepus_hoffmanni</i>)<br>121. Ryukyu mouse (<i>mus_caroli</i>)<br>122. Shrew (<i>sorex_araneus</i>)<br>123. Zebra Finch (<i>taeniopygia_guttata</i>)<br>124. Gelada (<i>theropithecus_gelada</i>)<br>125. Tiger tail seahorse (<i>hippocampus_comes</i>)<br>126. Brazilian guinea pig (<i>cavia_aperea</i>)<br>127. Periophthalmus magnuspinnatus (<i>periophthalmus_magnuspinnatus</i>)<br>128. Ma's night monkey (<i>aotus_nancymaae</i>)<br>129. Microbat (<i>myotis_lucifugus</i>)<br>130. Pig (<i>sus_scrofa</i>)<br>131. Coquerel's sifaka (<i>propithecus_coquereli</i>)<br>132. Drosophila melanogaster (<i>drosophila_melanogaster</i>)<br>133. Makobe Island cichlid (<i>pundamilia_nyererei</i>)<br>134. Lesser hedgehog tenrec (<i>echinops_telfairi</i>)<br>135. Dark-eyed junco (<i>junco_hyemalis</i>)<br>136. Red fox (<i>vulpes_vulpes</i>)<br>137. Chimpanzee (<i>pan_troglodytes</i>)<br>138. Chinese hamster CriGri (<i>cricetulus_griseus_crigri</i>)<br>139. Greater amberjack (<i>seriola_dumerili</i>)<br>140. Hedgehog (<i>erinaceus_europaeus</i>)<br>141. Elephant (<i>loxodonta_africana</i>)<br>142. Lyretail cichlid (<i>neolamprologus_brichardi</i>)<br>143. Chinese softshell turtle (<i>pelodiscus_sinensis</i>)<br>144. Prairie vole (<i>microtus_ochrogaster</i>)<br>145. Ocean sunfish (<i>mola_mola</i>)<br>146. Polar bear (<i>ursus_maritimus</i>)<br>147. Emu (<i>dromaius_novaehollandiae</i>)<br>148. Rabbit (<i>oryctolagus_cuniculus</i>)<br>149. Monterrey platyfish (<i>xiphophorus_couchianus</i>)<br>150. Sheepshead minnow (<i>cyprinodon_variegatus</i>)<br>151. C.intestinalis (<i>ciona_intestinalis</i>)<br>152. Red-bellied piranha (<i>pygocentrus_nattereri</i>)<br>153. Northern pike (<i>esox_lucius</i>)<br>154. Pika (<i>ochotona_princeps</i>)<br>155. Ferret (<i>mustela_putorius_furo</i>)<br>156. C.savignyi (<i>ciona_savignyi</i>)<br>157. Mongolian gerbil (<i>meriones_unguiculatus</i>)<br>158. Paramormyrops kingsleyae (<i>paramormyrops_kingsleyae</i>)<br>159. Lesser Egyptian jerboa (<i>jaculus_jaculus</i>)<br>160. Kangaroo rat (<i>dipodomys_ordii</i>)<br>161. Sooty mangabey (<i>cercocebus_atys</i>)<br>162. Tilapia (<i>oreochromis_niloticus</i>)<br>163. Orangutan (<i>pongo_abelii</i>)<br>164. Painted turtle (<i>chrysemys_picta_bellii</i>)<br>165. Zebra mbuna (<i>maylandia_zebra</i>)<br>166. Horse (<i>equus_caballus</i>)<br>167. Golden Hamster (<i>mesocricetus_auratus</i>)<br>168. Megabat (<i>pteropus_vampyrus</i>)<br>169. Yellowtail amberjack (<i>seriola_lalandi_dorsalis</i>)<br>170. Blue tit (<i>cyanistes_caeruleus</i>)<br>171. Mouse PWK/PhJ (<i>mus_musculus_pwkphj</i>)<br>172. Cod (<i>gadus_morhua</i>)<br>173. Burton's mouthbrooder (<i>haplochromis_burtoni</i>)<br>174. Saccharomyces cerevisiae (<i>saccharomyces_cerevisiae</i>)<br>175. Tongue sole (<i>cynoglossus_semilaevis</i>)<br>176. Dog (<i>canis_familiaris</i>)<br>177. Swamp eel (<i>monopterus_albus</i>)<br>178. Panda (<i>ailuropoda_melanoleuca</i>)<br>179. American beaver (<i>castor_canadensis</i>)<br>180. Budgerigar (<i>melopsittacus_undulatus</i>)<br>181. Northern American deer mouse (<i>peromyscus_maniculatus_bairdii</i>)<br>182. Flycatcher (<i>ficedula_albicollis</i>)<br>183. Wild yak (<i>bos_mutus</i>)<br>184. Mouse BALB/cJ (<i>mus_musculus_balbcj</i>)<br>185. Mouse CAST/EiJ (<i>mus_musculus_casteij</i>)<br>186. Rat (<i>rattus_norvegicus</i>)<br>187. Bushbaby (<i>otolemur_garnettii</i>)<br>188. Naked mole-rat male (<i>heterocephalus_glaber_male</i>)<br>189. Caenorhabditis elegans (<i>caenorhabditis_elegans</i>)<br>190. Guppy (<i>poecilia_reticulata</i>)<br>191. Japanese medaka HSOK (<i>oryzias_latipes_hsok</i>)<br>192. Tetraodon (<i>tetraodon_nigroviridis</i>)<br>193. Chilean tinamou (<i>nothoprocta_perdicaria</i>)<br>194. Tree Shrew (<i>tupaia_belangeri</i>)<br>195. Mouse C3H/HeJ (<i>mus_musculus_c3hhej</i>)<br>196. Shortfin molly (<i>poecilia_mexicana</i>)<br>197. Japanese medaka HdrR (<i>oryzias_latipes</i>)<br>198. Hyrax (<i>procavia_capensis</i>)<br>199. Mouse AKR/J (<i>mus_musculus_akrj</i>)</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+http://localhost:8000/listSpecies?limit=10
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>SPECIES</u>:</h3>
+                <p>1. Flycatcher (<i>ficedula_albicollis</i>)<br>2. American beaver (<i>castor_canadensis</i>)<br>3. C.intestinalis (<i>ciona_intestinalis</i>)<br>4. Central bearded dragon (<i>pogona_vitticeps</i>)<br>5. Golden-collared manakin (<i>manacus_vitellinus</i>)<br>6. Steppe mouse (<i>mus_spicilegus</i>)<br>7. White-throated sparrow (<i>zonotrichia_albicollis</i>)<br>8. Kangaroo rat (<i>dipodomys_ordii</i>)<br>9. Gibbon (<i>nomascus_leucogenys</i>)<br>10. Mouse FVB/NJ (<i>mus_musculus_fvbnj</i>)</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+http://localhost:8000/listSpecies?limit=3000
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>SPECIES</u>:</h3>
+                <p>1. Mouse (<i>mus_musculus</i>)<br>2. Human (<i>homo_sapiens</i>)<br>3. Guinea Pig (<i>cavia_porcellus</i>)<br>4. Mouse CBA/J (<i>mus_musculus_cbaj</i>)<br>5. Midas cichlid (<i>amphilophus_citrinellus</i>)<br>6. Anole lizard (<i>anolis_carolinensis</i>)<br>7. Capuchin (<i>cebus_capucinus</i>)<br>8. Ballan wrasse (<i>labrus_bergylta</i>)<br>9. Leopard (<i>panthera_pardus</i>)<br>10. Fugu (<i>takifugu_rubripes</i>)<br>11. Black snub-nosed monkey (<i>rhinopithecus_bieti</i>)<br>12. Zig-zag eel (<i>mastacembelus_armatus</i>)<br>13. Blue-crowned manakin (<i>lepidothrix_coronata</i>)<br>14. Damara mole rat (<i>fukomys_damarensis</i>)<br>15. Opossum (<i>monodelphis_domestica</i>)<br>16. Donkey (<i>equus_asinus_asinus</i>)<br>17. Platyfish (<i>xiphophorus_maculatus</i>)<br>18. Little spotted kiwi (<i>apteryx_owenii</i>)<br>19. Ruff (<i>calidris_pugnax</i>)<br>20. Stickleback (<i>gasterosteus_aculeatus</i>)<br>21. Chinese hamster PICR (<i>cricetulus_griseus_picr</i>)<br>22. Steppe mouse (<i>mus_spicilegus</i>)<br>23. Indian medaka (<i>oryzias_melastigma</i>)<br>24. Upper Galilee mountains blind mole rat (<i>nannospalax_galili</i>)<br>25. Abingdon island giant tortoise (<i>chelonoidis_abingdonii</i>)<br>26. Spiny chromis (<i>acanthochromis_polyacanthus</i>)<br>27. Asian bonytongue (<i>scleropages_formosus</i>)<br>28. Tasmanian devil (<i>sarcophilus_harrisii</i>)<br>29. Chicken (<i>gallus_gallus</i>)<br>30. Coelacanth (<i>latimeria_chalumnae</i>)<br>31. Helmeted guineafowl (<i>numida_meleagris</i>)<br>32. Mouse A/J (<i>mus_musculus_aj</i>)<br>33. Sailfin molly (<i>poecilia_latipinna</i>)<br>34. Koala (<i>phascolarctos_cinereus</i>)<br>35. Mouse FVB/NJ (<i>mus_musculus_fvbnj</i>)<br>36. Chinese hamster CHOK1GS (<i>cricetulus_griseus_chok1gshd</i>)<br>37. Mouse LP/J (<i>mus_musculus_lpj</i>)<br>38. Naked mole-rat female (<i>heterocephalus_glaber_female</i>)<br>39. Spoon-billed sandpiper (<i>calidris_pygmaea</i>)<br>40. Duck (<i>anas_platyrhynchos_platyrhynchos</i>)<br>41. Bolivian squirrel monkey (<i>saimiri_boliviensis_boliviensis</i>)<br>42. Bengalese finch (<i>lonchura_striata_domestica</i>)<br>43. Marmoset (<i>callithrix_jacchus</i>)<br>44. Sheep (<i>ovis_aries</i>)<br>45. Olive baboon (<i>papio_anubis</i>)<br>46. Crab-eating macaque (<i>macaca_fascicularis</i>)<br>47. Mainland tiger snake (<i>notechis_scutatus</i>)<br>48. Goat (<i>capra_hircus</i>)<br>49. Mummichog (<i>fundulus_heteroclitus</i>)<br>50. American black bear (<i>ursus_americanus</i>)<br>51. Mouse NZO/HlLtJ (<i>mus_musculus_nzohlltj</i>)<br>52. Wallaby (<i>notamacropus_eugenii</i>)<br>53. Dolphin (<i>tursiops_truncatus</i>)<br>54. Western mosquitofish (<i>gambusia_affinis</i>)<br>55. Cat (<i>felis_catus</i>)<br>56. Bonobo (<i>pan_paniscus</i>)<br>57. Gibbon (<i>nomascus_leucogenys</i>)<br>58. Vervet-AGM (<i>chlorocebus_sabaeus</i>)<br>59. Cow (<i>bos_taurus</i>)<br>60. Clown anemonefish (<i>amphiprion_ocellaris</i>)<br>61. Shrew mouse (<i>mus_pahari</i>)<br>62. Japanese quail (<i>coturnix_japonica</i>)<br>63. Tarsier (<i>carlito_syrichta</i>)<br>64. Great spotted kiwi (<i>apteryx_haastii</i>)<br>65. Pig-tailed macaque (<i>macaca_nemestrina</i>)<br>66. Tuatara (<i>sphenodon_punctatus</i>)<br>67. Pink-footed goose (<i>anser_brachyrhynchus</i>)<br>68. Climbing perch (<i>anabas_testudineus</i>)<br>69. Spotted gar (<i>lepisosteus_oculatus</i>)<br>70. Golden snub-nosed monkey (<i>rhinopithecus_roxellana</i>)<br>71. Daurian ground squirrel (<i>spermophilus_dauricus</i>)<br>72. Amazon molly (<i>poecilia_formosa</i>)<br>73. Turbot (<i>scophthalmus_maximus</i>)<br>74. Algerian mouse (<i>mus_spretus</i>)<br>75. Lamprey (<i>petromyzon_marinus</i>)<br>76. Xenopus (<i>xenopus_tropicalis</i>)<br>77. Agassiz's desert tortoise (<i>gopherus_agassizii</i>)<br>78. American bison (<i>bison_bison_bison</i>)<br>79. Mouse 129S1/SvImJ (<i>mus_musculus_129s1svimj</i>)<br>80. Channel catfish (<i>ictalurus_punctatus</i>)<br>81. Degu (<i>octodon_degus</i>)<br>82. Angola colobus (<i>colobus_angolensis_palliatus</i>)<br>83. Golden-collared manakin (<i>manacus_vitellinus</i>)<br>84. Eastern happy (<i>astatotilapia_calliptera</i>)<br>85. Greater bamboo lemur (<i>prolemur_simus</i>)<br>86. Mouse WSB/EiJ (<i>mus_musculus_wsbeij</i>)<br>87. Armadillo (<i>dasypus_novemcinctus</i>)<br>88. Mangrove rivulus (<i>kryptolebias_marmoratus</i>)<br>89. Mouse DBA/2J (<i>mus_musculus_dba2j</i>)<br>90. Arctic ground squirrel (<i>urocitellus_parryii</i>)<br>91. Gorilla (<i>gorilla_gorilla</i>)<br>92. Mouse Lemur (<i>microcebus_murinus</i>)<br>93. Drill (<i>mandrillus_leucophaeus</i>)<br>94. Central bearded dragon (<i>pogona_vitticeps</i>)<br>95. American mink (<i>neovison_vison</i>)<br>96. Great Tit (<i>parus_major</i>)<br>97. Macaque (<i>macaca_mulatta</i>)<br>98. Platypus (<i>ornithorhynchus_anatinus</i>)<br>99. Japanese medaka HNI (<i>oryzias_latipes_hni</i>)<br>100. Hagfish (<i>eptatretus_burgeri</i>)<br>101. Dingo (<i>canis_lupus_dingo</i>)<br>102. Zebrafish (<i>danio_rerio</i>)<br>103. Mouse NOD/ShiLtJ (<i>mus_musculus_nodshiltj</i>)<br>104. Bicolor damselfish (<i>stegastes_partitus</i>)<br>105. Long-tailed chinchilla (<i>chinchilla_lanigera</i>)<br>106. Mouse C57BL/6NJ (<i>mus_musculus_c57bl6nj</i>)<br>107. Mexican tetra (<i>astyanax_mexicanus</i>)<br>108. Squirrel (<i>ictidomys_tridecemlineatus</i>)<br>109. Alpaca (<i>vicugna_pacos</i>)<br>110. Australian saltwater crocodile (<i>crocodylus_porosus</i>)<br>111. White-throated sparrow (<i>zonotrichia_albicollis</i>)<br>112. Orange clownfish (<i>amphiprion_percula</i>)<br>113. Tiger (<i>panthera_tigris_altaica</i>)<br>114. Turkey (<i>meleagris_gallopavo</i>)<br>115. Ugandan red Colobus (<i>piliocolobus_tephrosceles</i>)<br>116. Alpine marmot (<i>marmota_marmota_marmota</i>)<br>117. Common canary (<i>serinus_canaria</i>)<br>118. Okarito brown kiwi (<i>apteryx_rowi</i>)<br>119. Argentine black and white tegu (<i>salvator_merianae</i>)<br>120. Sloth (<i>choloepus_hoffmanni</i>)<br>121. Ryukyu mouse (<i>mus_caroli</i>)<br>122. Shrew (<i>sorex_araneus</i>)<br>123. Zebra Finch (<i>taeniopygia_guttata</i>)<br>124. Gelada (<i>theropithecus_gelada</i>)<br>125. Tiger tail seahorse (<i>hippocampus_comes</i>)<br>126. Brazilian guinea pig (<i>cavia_aperea</i>)<br>127. Periophthalmus magnuspinnatus (<i>periophthalmus_magnuspinnatus</i>)<br>128. Ma's night monkey (<i>aotus_nancymaae</i>)<br>129. Microbat (<i>myotis_lucifugus</i>)<br>130. Pig (<i>sus_scrofa</i>)<br>131. Coquerel's sifaka (<i>propithecus_coquereli</i>)<br>132. Drosophila melanogaster (<i>drosophila_melanogaster</i>)<br>133. Makobe Island cichlid (<i>pundamilia_nyererei</i>)<br>134. Lesser hedgehog tenrec (<i>echinops_telfairi</i>)<br>135. Dark-eyed junco (<i>junco_hyemalis</i>)<br>136. Red fox (<i>vulpes_vulpes</i>)<br>137. Chimpanzee (<i>pan_troglodytes</i>)<br>138. Chinese hamster CriGri (<i>cricetulus_griseus_crigri</i>)<br>139. Greater amberjack (<i>seriola_dumerili</i>)<br>140. Hedgehog (<i>erinaceus_europaeus</i>)<br>141. Elephant (<i>loxodonta_africana</i>)<br>142. Lyretail cichlid (<i>neolamprologus_brichardi</i>)<br>143. Chinese softshell turtle (<i>pelodiscus_sinensis</i>)<br>144. Prairie vole (<i>microtus_ochrogaster</i>)<br>145. Ocean sunfish (<i>mola_mola</i>)<br>146. Polar bear (<i>ursus_maritimus</i>)<br>147. Emu (<i>dromaius_novaehollandiae</i>)<br>148. Rabbit (<i>oryctolagus_cuniculus</i>)<br>149. Monterrey platyfish (<i>xiphophorus_couchianus</i>)<br>150. Sheepshead minnow (<i>cyprinodon_variegatus</i>)<br>151. C.intestinalis (<i>ciona_intestinalis</i>)<br>152. Red-bellied piranha (<i>pygocentrus_nattereri</i>)<br>153. Northern pike (<i>esox_lucius</i>)<br>154. Pika (<i>ochotona_princeps</i>)<br>155. Ferret (<i>mustela_putorius_furo</i>)<br>156. C.savignyi (<i>ciona_savignyi</i>)<br>157. Mongolian gerbil (<i>meriones_unguiculatus</i>)<br>158. Paramormyrops kingsleyae (<i>paramormyrops_kingsleyae</i>)<br>159. Lesser Egyptian jerboa (<i>jaculus_jaculus</i>)<br>160. Kangaroo rat (<i>dipodomys_ordii</i>)<br>161. Sooty mangabey (<i>cercocebus_atys</i>)<br>162. Tilapia (<i>oreochromis_niloticus</i>)<br>163. Orangutan (<i>pongo_abelii</i>)<br>164. Painted turtle (<i>chrysemys_picta_bellii</i>)<br>165. Zebra mbuna (<i>maylandia_zebra</i>)<br>166. Horse (<i>equus_caballus</i>)<br>167. Golden Hamster (<i>mesocricetus_auratus</i>)<br>168. Megabat (<i>pteropus_vampyrus</i>)<br>169. Yellowtail amberjack (<i>seriola_lalandi_dorsalis</i>)<br>170. Blue tit (<i>cyanistes_caeruleus</i>)<br>171. Mouse PWK/PhJ (<i>mus_musculus_pwkphj</i>)<br>172. Cod (<i>gadus_morhua</i>)<br>173. Burton's mouthbrooder (<i>haplochromis_burtoni</i>)<br>174. Saccharomyces cerevisiae (<i>saccharomyces_cerevisiae</i>)<br>175. Tongue sole (<i>cynoglossus_semilaevis</i>)<br>176. Dog (<i>canis_familiaris</i>)<br>177. Swamp eel (<i>monopterus_albus</i>)<br>178. Panda (<i>ailuropoda_melanoleuca</i>)<br>179. American beaver (<i>castor_canadensis</i>)<br>180. Budgerigar (<i>melopsittacus_undulatus</i>)<br>181. Northern American deer mouse (<i>peromyscus_maniculatus_bairdii</i>)<br>182. Flycatcher (<i>ficedula_albicollis</i>)<br>183. Wild yak (<i>bos_mutus</i>)<br>184. Mouse BALB/cJ (<i>mus_musculus_balbcj</i>)<br>185. Mouse CAST/EiJ (<i>mus_musculus_casteij</i>)<br>186. Rat (<i>rattus_norvegicus</i>)<br>187. Bushbaby (<i>otolemur_garnettii</i>)<br>188. Naked mole-rat male (<i>heterocephalus_glaber_male</i>)<br>189. Caenorhabditis elegans (<i>caenorhabditis_elegans</i>)<br>190. Guppy (<i>poecilia_reticulata</i>)<br>191. Japanese medaka HSOK (<i>oryzias_latipes_hsok</i>)<br>192. Tetraodon (<i>tetraodon_nigroviridis</i>)<br>193. Chilean tinamou (<i>nothoprocta_perdicaria</i>)<br>194. Tree Shrew (<i>tupaia_belangeri</i>)<br>195. Mouse C3H/HeJ (<i>mus_musculus_c3hhej</i>)<br>196. Shortfin molly (<i>poecilia_mexicana</i>)<br>197. Japanese medaka HdrR (<i>oryzias_latipes</i>)<br>198. Hyrax (<i>procavia_capensis</i>)<br>199. Mouse AKR/J (<i>mus_musculus_akrj</i>)</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+http://localhost:8000/listSpecies?limit=-2
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>SPECIES</u>:</h3>
+                <p></p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+
+--------------------------------
+
+--- 1.2.- KARYOTYPE
+
+---
+http://localhost:8000/karyotype?specie=mouse
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>KARYOTYPE</u>:</h3>
+                <p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>X<br>Y<br>MT</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/karyotype?specie=Blanca
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>
+        This species is not available.
+        Check for valid species between parenthesis <a href="/listSpecies">here</a>.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+
+--------------------------------
+
+--- 1.3.- CHROMOSOME LENGTH
+
+---
+http://localhost:8000/karyotype?specie=mouse
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>CHROMOSOME</u>:</h3>
+                <p>Length of chromosome (18): 90702639</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/chromosomeLength?specie=leche&chromo=18
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>
+        This species is not available.
+        Check for valid species between parenthesis <a href="/listSpecies">here</a>.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/chromosomeLength?specie=homo_sapiens&chromo=meh
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>
+        This chromosome could not be found in the karyotype of 'homo_sapiens'.<br>
+        Check for valid chromosomes <a href="/karyotype?specie=homo_sapiens">here</a>.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/chromosomeLength?specie=mouse&chromo=meh
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>
+        This chromosome could not be found in the karyotype of 'mouse'.<br>
+        Check for valid chromosomes <a href="/karyotype?specie=mouse">here</a>.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
