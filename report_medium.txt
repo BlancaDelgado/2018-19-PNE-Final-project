@@ -1,0 +1,194 @@
+
+TESTING MEDIUM LEVEL
+Blanca Delgado
+
+--------------------------------
+
+--- 2.1.- SEQUENCE OF A GENE
+
+---
+http://localhost:8000/geneSeq?gene=FRAT1
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>FRAT1 SEQUENCE</u>:</h3>
+                <p>ATTCCGGCTCCCGCGGCTGCAGGCGCGCGGCTAGAGTGCCTGGCGGGCTCCGGCTTCCGCGTCCGCCCCGGCCCCGGTCCAGACTTAGTCT<br>TCAGCTCCGCGCCCGCTCCGCCGCGGCCCACCGCGCCCGCCGGCAGCCGAGCCCCCAGCGACGCCCGCACAGCTCCGGGTGCCCAGACAGG<br>GGGCCATGCCGTGCCGGAGGGAGGAGGAAGAGGAAGCCGGCGAGGAGGCGGAGGGGGAGGAAGAGGAGGAGGACAGCTTCCTCCTACTGCA<br>GCAGTCAGTGGCGCTGGGCAGCTCGGGCGAGGTGGACCGGCTGGTGGCCCAGATCGGCGAGACGCTGCAGCTGGACGCGGCGCAGCACAGC<br>CCGGCCTCGCCGTGCGGGCCCCCGGGGGCGCCGCTGCGGGCCCCGGGGCCCCTGGCTGCGGCGGTGCCGGCGGACAAGGCCAGGTCCCCGG<br>CGGTGCCGCTGCTGCTGCCGCCCGCGTTGGCGGAGACTGTGGGCCCGGCGCCCCCTGGGGTCCTGCGCTGCGCCCTGGGGGACCGCGGCCG<br>CGTGCGGGGCCGCGCTGCGCCCTACTGCGTGGCCGAGCTCGCCACAGGCCCCAGCGCGCTGTCCCCACTGCCCCCTCAGGCCGACCTTGAT<br>GGGCCTCCGGGAGCTGGCAAGCAGGGCATCCCGCAGCCGCTGTCGGGTCCGTGCCGGCGAGGATGGCTCCGGGGCGCCGCCGCCTCCCGCC<br>GCCTGCAGCAGCGACGCGGGTCCCAACCAGAAACCCGCACAGGCGACGACGACCCGCACCGGCTTCTGCAGCAGCTAGTGCTCTCTGGAAA<br>CCTCATCAAGGAGGCCGTGCGAAGGCTTCATTCGCGACGGCTGCAGTTACGTGCAAAGCTTCCCCAACGCCCGCTCCTGGGACCTCTGTCG<br>GCCCCGGTGCATGAACCCCCTTCGCCTCGCAGCCCTCGCGCGGCCTGCAGTGACCCTGGCGCCTCCGGGAGGGCGCAGCTCAGAACTGGCG<br>ACGGCGTTCTTGTGCCTGGCAGCTAACACGCCCGGGGTGGCCACAGCGCCAGCCTCAGACTGGAGGGCAAGGGGTTCCCTTGAGGGCTGCA<br>GTTCTACTCAGGCTGGTGGAGAACTCTGGCTTTTGGAAGCGAGAGTAAAAAGCTAATGACGAGGAACCGAAAAATCGCGAGTGTTTCGCGG<br>GTAACTGGGGTTGAGGGCCAAAATATTTGGAATGAAGGACTTTGGCCCTATTTAAGGCAGATTTTACAGAGCGCACCTCAAACGTACAAGT<br>CAGTAGGACTCCTTATTTGGCGTGACCCGACCTGGCCGCGGAGCCTGCATTTCCTCGCAGCCTCTCAGTGCCCTCCAGCCCCGCGACCATG<br>TGGCCACAATCCACGCTTCTCCGGATCGCGGTGCGCCGGAACCACGGAGGATGATGCCAGTTACTTGCTTTACCTTTTCAGGGCTGGCTCC<br>TGATCCACTTTGGGGGAGGAGAACATGAGTAGATAATTTCAGGGTGCAGCCCAATCTGCCAGACTTAAAAAAACCATCTTGTGTCTTTGGA<br>GGTGCTGCTTAATACCAAACATGCGGTGCCATGAAGGGACCCTTTGGGGGTTGAATAGGAGTTAACCCCTGCGCTCTCTTTGCAACTGTCT<br>CTCTTCTCAGAGTGGTGGGGGAAGGCTGTACGACACGGGTGGGGAAAGGAGGTGGGGGCGGGGAGTATTGAATGGTGGTGGAAGGGTAGAG<br>AGGCGCGGAGTGAACCCCACGCCCTGTCTAAAGTGTATTTTCAGAGCCGGCCCGCCTCTCCTCGGTTCAAGGTCACTGTTTCCTGGGCACG<br>CACTGGGTTGCGGGACAGAGTAGCCAGGTTCTGCCGGTGCTCGGAGAAGAGCGCAGTGTTTTGCAAGTGCTGGAGTCTCCTGAGGACACGC<br>GCGTCGCCGCCACCGCGGGTGTGGGAAAGCGCGGACGTGCTGGGCGGCTGTGCTTCGGTAGGCGACCACCGCCCCTGGCCGCGCTCCGGGC<br>TTTCACGGAAACTCCCGAGACCGGGCCCTGGGTTCCTCCTCTCCTACTCGGCTCTGCAGTCCTACTCAAGCGGGTGGCTCTGGGATCCTGG<br>GGGCCTGGGTTGGGGGCTAGGGAGACGCCATGTGATGGACACTCCAGGGACACACAGCCTAGCACAGCAGCTTATAATGGGCTCTCCGGGG<br>CCATTTGCAATAACAGCTGCAATTCCCTGGATAGACGAGTTGATTTCCTCCCTCTGCCCCTCCCCCAGCCATGCCAGCTGGCCTTTGTAAG<br>TGCAGGAAACCGAGTAGAAAATGTGACCCTCCAAATGGAGAAGCTGCAGGCTTTGCCATTGTGAACCATGGTGAAGTGCTTGGAACATACT<br>GTTCACTCACTCTAAAGGCGCTGAGACTGTGCTGTTGTTCTCGTTTTTATAGTCAATGGCTTGTTCATCATCCAGATGTGGCTACTGACAT<br>ATCTACACTTCGCACCGGAGTGTCTGGAATTGTGGCTATCCTGATTATAGGATTTTAACTTAACTGAAATGCCTGCTTTGAATAAATGTGT<br>TGGGTTTTTTGTTTGGTTTTATTTTATACTTGCCATCAGTGAAAAAGATGTACAGAACACATTTCTCTGATCTCCATAAACATGAAAACAC<br>TTGAAATCTC</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/geneSeq?gene=what
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>This gene is not available.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+
+--------------------------------
+
+--- 2.2.- INFORMATION OF THE GENE
+
+---
+http://localhost:8000/geneInfo?gene=FRAT1
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>INFORMATION</u>:</h3>
+                <p>CHROMOSOME: GRCh38.p10<br>ID: ENSG00000165879<br><br>START: 97319267<br>END: 97321915<br>LENGTH: 2648</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/geneInfo?gene=WHAT
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>This gene is not available.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+
+--------------------------------
+
+--- 2.3.- CALCULATIONS OF THE GENE
+
+---
+http://localhost:8000/geneCalc?gene=FRAT1
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>CALCULATIONS</u>:</h3>
+                <p>LENGTH: 2649<br>A: 478 (18.04%)<br>C: 800 (30.2%)<br>G: 849 (32.05%)<br>T: 522 (19.71%)</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/geneCalc?gene=SLEEP
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>This gene is not available.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+
+--------------------------------
+
+--- 2.4.- NAMES OF GENES IN A CHROMOSOME
+
+---
+http://localhost:8000/geneList?chromo=1&start=0&end=30000
+---
+        <html lang="en">
+            <header>
+                <meta charset="UTF-8">
+                <title>Data</title>
+            </header>
+
+            <body>
+                <h3><u>GENES LOCATED IN THE CHROMOSOME</u>:</h3>
+                <p>DDX11L1<br>WASH7P<br>MIR6859-1<br>MIR1302-2HG</p>
+                <br>
+                <a href="/">[Main page]</a>
+                <br><br>
+            </body>
+
+        </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/geneList?chromo=no&start=0&end=30000
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>
+        We could not analyze your operation.
+        Please try another chromosome in the karyotype of 'homo_sapiens' or try different lengths!<br>
+        Check for valid chromosomes <a href="/karyotype?specie=homo_sapiens">here</a>.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
+
+---
+SOLVING ERRORS: http://localhost:8000/geneList?chromo=7&start=30000&end=3
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>
+        We could not analyze your operation.
+        Please try another chromosome in the karyotype of 'homo_sapiens' or try different lengths!<br>
+        Check for valid chromosomes <a href="/karyotype?specie=homo_sapiens">here</a>.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
