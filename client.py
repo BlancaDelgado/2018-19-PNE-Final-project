@@ -28,7 +28,7 @@ titles = [
 endpoints = [
     '/listSpecies?json=1',
     '/listSpecies?limit=3&json=1',
-    '/karyotype?specie=homo_sapiens&json=1',
+    '/karyotype?specie=UMMM&json=1',
     '/chromosomeLength?specie=homo_sapiens&chromo=7&json=1',
     '/geneSeq?gene=FRAT1&json=1',
     '/geneInfo?gene=FRAT1&json=1',
@@ -45,9 +45,15 @@ for title, endpoint in zip(titles, endpoints):
     r = conn.getresponse()
     termcolor.cprint("Response received: {s} {r}".format(s=r.status, r=r.reason), 'green')
 
+    error = 'ERROR. The server could not get your request.'
+
     if (r.status == 200) and (r.reason == 'OK'):
         data = r.read().decode("utf-8")
-        response = json.loads(data)
-        print(response)
+        if 'html' not in data:
+            response = json.loads(data)
+        else:
+            response = error
     else:
-        print('ERROR. The server could not get your request.')
+        response = error
+
+    print(response)

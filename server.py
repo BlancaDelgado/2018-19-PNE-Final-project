@@ -248,9 +248,11 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
                 else:  # wrong species selected, warning dict received
                     contents = error('Species')
+                    restapi = False
 
             except KeyError:  # no species selected, no dict received
                 contents = error('NoSpecies')
+                restapi = False
 
         # --- 1.3.- CHROMOSOME LENGTH
         elif 'chromosomeLength' in self.path:
@@ -271,15 +273,19 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                             length = str(i['length'])
                             chromosomes = 'Length of chromosome (' + chromo + '): ' + length
 
-                            if restapi:
-                                contents = json.dumps({'length': length})
-                            else:
-                                contents = info('CHROMOSOME', chromosomes)
+                    if ok_chromo:
 
-                    if not ok_chromo:  # not valid chromosome
+                        if restapi:
+                            contents = json.dumps({'length': length})
+                        else:
+                            contents = info('CHROMOSOME', chromosomes)
+
+                    else:  # not valid chromosome
+                        restapi = False
                         contents = error('NoChromo', species=species)
 
                 else:  # wrong species selected, warning dict received
+                    restapi = False
                     contents = error('Species')
 
             except KeyError:  # no species selected, no dict received
@@ -292,6 +298,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
             if not bool(gene_ID):
                 contents = error('NoGene')
+                restapi = False
             else:
                 endpoint = '/sequence/id/' + gene_ID
                 data = connect(endpoint)
@@ -320,6 +327,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
             if not bool(gene_ID):
                 contents = error('NoGene')
+                restapi = False
             else:
                 endpoint = '/sequence/id/' + gene_ID
 
@@ -353,6 +361,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
             if not bool(gene_ID):
                 contents = error('NoGene')
+                restapi = False
             else:
                 endpoint = '/sequence/id/' + gene_ID
                 data = connect(endpoint)
@@ -398,6 +407,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
             if not bool(data):
                 contents = error('WrongChromo', 'homo_sapiens')
+                restapi = False
             else:
                 genes = []
                 for i in data:

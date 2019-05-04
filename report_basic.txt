@@ -4,6 +4,7 @@ Blanca Delgado
 
 --------------------------------
 
+
 --- 0.0.- MAIN PAGE
 
 ---
@@ -196,6 +197,24 @@ http://localhost:8000/listSpecies?limit=-2
             </body>
 
         </html>
+
+---
+http://localhost:8000/listSpecies?limit=meh
+---
+<html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Error</title>
+                    </head>
+                    <body style="background-color: #F16E6C">
+                        <br><br><br>
+                        <h1>Oops...</h1>
+                        <p>Make sure to introduce correct values. Limit must be a positive integer.</p>
+                        <br>
+                        <a href="/">[Main page]</a>
+                        <br><br>
+                    </body>
+                </html>
 
 
 --------------------------------
